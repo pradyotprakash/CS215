@@ -1,0 +1,11 @@
+land_area	Land area (sq. km)	AG.LND.TOTL.K2	square kilometre
+foreign_direct_investment	Foreign direct investment, net (BoP, current US$)	BN.KLT.DINV.CD	united states dollar
+goods_export	Goods exports (BoP, current US$)	BX.GSR.MRCH.CD	united states dollar
+electricity_production	Electricity production (kWh)	EG.ELC.PROD.KH	kilowatt-hour
+co2_emissions	CO2 emissions (kt)	EN.ATM.CO2E.KT	kiloton
+diesel_fuel_price	Pump price for diesel fuel (US$ per liter)	EP.PMP.DESL.CD	united states dollar per litre
+inflation	Inflation, consumer prices (annual %)	FP.CPI.TOTL.ZG	percent
+internet_users	Internet users (per 100 people)	IT.NET.USER.P2	no_unit	
+gross_domestic_product	GDP (current US$)	NY.GDP.MKTP.CD	united states dollar
+life_expectancy_at_birth	Life expectancy at birth, total (years)	SP.DYN.LE00.IN	year
+population	Population (Total)	SP.POP.TOTL	no_unit

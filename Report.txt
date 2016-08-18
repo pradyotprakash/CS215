@@ -1,0 +1,72 @@
+Project : Confidence assignment to database
+Group No:13
+
+Name				Rollnumber
+Pradyot Prakash		130050008
+Rawal Khirodkar		130050014	
+Lokit Kumar Paras 	130050047
+
+Coding Language: Python 2.7
+Our program takes a good amount of time to generate the values. So please be patient.
+
+Model:
+	In the problem statement we have 4 variables, sentence,country,numbers in the sentence and relation about which the sentences speaks of.
+	While the first three variable are known from sentences.tsv and using some simple data comparisons among given files, the interesting part is how to conclude what the sentence is speaking about.
+
+	Our solution: We created a file having meta-characters for each relation, namely keywords_relation.csv. We also created countryAliases.tsv which stores alternate names for some countries as are present in sentences.tsv.
+	Each keyword has an integer assigned to it depending upon where it is listed (i.e one keyword can be in more than one relation,eg "billion")
+	This integer is the weightage we give for the appearance of this keyword in the sentence, overall weightage is thus calculated for all relations
+	and the maximum weightage relation is thus used as our sentence-relation. Well we can have multiple max weightage relation for a sentence.
+
+Polynomial Regression:
+	Our first approach was to try to relate the values for a paricular relation to a Gaussian distribution. But since the values are
+	not from the same population so this gave us very poor results.	
+	So our nest strategy was to try polynomial regression.
+	We generate polynomial function from the knowledge base for each country and relation , using true data values as our y and indexs given to them on unit distance based on the sorted list of true values. We have the freedom to change the polynomial degrees.
+
+	eg: Japan GDP 100,500,300,200,400
+	then our regression table will be as follows:
+	Y 		X
+	100 	0
+	200 	1
+	300 	2
+	400 	3
+	500 	4
+
+	Say we got a polynomial f(x)
+
+Confidence Computation: After we know what a particular relation is talking about, we have fixed all the four variables and are ready to do computations.
+						Cases: We might have multiple countries(say a),numbers(say b),relations (say c).
+								So, total number of computations = a*b*c;
+
+								By computations we mean, sending a number to each polynomial equation of a country and a relation.
+								Say Relation = GDP, Country = Japan, Number = 350
+
+								We mix this point in the true database of the relation and country pair and sort them, we are doing this to assign a X value
+								to the number Y
+
+								eg: Our Sorted data becomes,
+								Y 		X
+								100 	0
+								200	 	1
+								300 	2
+								350 	3
+								400		4
+								500 	5
+
+								Therefore X value of the data-point from sentence is 3,Co-ordinated are X = 3, Y = 350.
+
+						This point P is our sample point, we compute its perpendicular distance from the polynomial f(x), lesser the distance more confidence we have of it validness.
+						
+						The shortest distance d(t) = sqrt( (X-t)^2 + (Y-f(t))^2 ), diffrentiating this and equating to zero we get n+n-1 degree polynomial in t( n is degree of f(x) ). Finding its root by Newton Ralphson method we get the "t"(say t0) from which the distance is minimum from the point P.Thus we get d(t0)
+
+						Confidence is inversely proportional to this distance roughly, of-course it lies between 0 to 1. We tried exponential distribution to model the confidence scores and the values obtained are quite good.
+
+Thus we get confidence score for a country ,sentence ,relation ,number
+
+Range of values of confidence(c):
+								c >= 0.6: Very good estimation
+								0.3 < c < 0.6: Medium
+								c < 0.3: Bad
+
+Link to our presentation: https://docs.google.com/presentation/d/1H-NHHKcED1zzhjit5_StzngMvQitlGcycucL7iTnwLY/edit#slide=id.g4711fec34_10
